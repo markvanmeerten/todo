@@ -1,30 +1,94 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'pages/todo_page.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  runApp(const MyApp());
+void main() {
+  runApp(const TodoApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class TodoApp extends StatelessWidget {
+  const TodoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.green,
+    return const MaterialApp(
+      home: TodoHomePage(),
+    );
+  }
+}
+
+class TodoHomePage extends StatefulWidget {
+  const TodoHomePage({super.key});
+
+  @override
+  State<TodoHomePage> createState() => _TodoHomePageState();
+}
+
+class _TodoHomePageState extends State<TodoHomePage> {
+  final List<Map<String, dynamic>> tasksJson = [
+    {'title': 'Boodschappen doen', 'done': false},
+    {'title': 'Huiswerk maken', 'done': true},
+    {'title': 'Flutter oefenen', 'done': false},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Todo-app'),
       ),
-      home: const TodoPage(),
+      body: ListView.builder(
+        itemCount: tasksJson.length,
+        itemBuilder: (context, index) {
+          final taskMap = tasksJson[index];
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Task(
+              title: taskMap['title'] as String,
+              initialDone: taskMap['done'] as bool,
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class Task extends StatefulWidget {
+  const Task({
+    super.key,
+    required this.title,
+    required this.initialDone,
+  });
+
+  final String title;
+  final bool initialDone;
+
+  @override
+  State<Task> createState() => _TaskState();
+}
+
+class _TaskState extends State<Task> {
+  late bool isDone;
+
+  @override
+  void initState() {
+    super.initState();
+    isDone = widget.initialDone;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Checkbox(
+          value: isDone,
+          onChanged: (newValue) {
+            setState(() {
+              isDone = newValue ?? false;
+            });
+          },
+        ),
+        Text(widget.title),
+      ],
     );
   }
 }
