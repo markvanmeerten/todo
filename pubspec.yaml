@@ -1,5 +1,5 @@
 name: todo
-description: "A new Flutter project."
+description: "A simple todo app"
 publish_to: 'none'
 version: 0.1.0
 
@@ -9,8 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^4.4.0
-  cloud_firestore: ^6.1.2
 
 dev_dependencies:
   flutter_test:
