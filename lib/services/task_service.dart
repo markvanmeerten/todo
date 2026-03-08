@@ -10,4 +10,14 @@ class TaskService {
   List<Task> getTasks() {
     return _tasks;
   }
+
+  void toggleTask(Task task) {
+    final index = _tasks.indexOf(task);
+    
+    _tasks[index] = Task(
+      id: task.id,
+      title: task.title,
+      done: !task.done,
+    );
+  }
 }

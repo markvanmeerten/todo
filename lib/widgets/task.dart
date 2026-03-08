@@ -1,41 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:todo/models/task.dart' as model;
 
-class Task extends StatefulWidget {
+class Task extends StatelessWidget {
   const Task({
     super.key,
-    required this.title,
-    required this.initialDone,
+    required this.task,
+    required this.onChanged,
   });
 
-  final String title;
-  final bool initialDone;
+  final model.Task task;
+  final VoidCallback onChanged;
 
-  @override
-  State<Task> createState() => _TaskState();
-}
-
-class _TaskState extends State<Task> {
-  late bool isDone;
-
-  @override
-  void initState() {
-    super.initState();
-    isDone = widget.initialDone;
-  }
-
-  @override
+   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Checkbox(
-          value: isDone,
+          value: task.done,
           onChanged: (newValue) {
-            setState(() {
-              isDone = newValue ?? false;
-            });
+            onChanged();
           },
         ),
-        Text(widget.title),
+        Text(task.title),
       ],
     );
   }

@@ -29,8 +29,12 @@ class _TaskHomePageState extends State<TaskHomePage> {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: widget.Task(
-              title: task.title,
-              initialDone: task.done,
+              task: task,
+              onChanged: () {
+                setState(() {
+                  taskService.toggleTask(task);
+                });
+              },
             ),
           );
         },
