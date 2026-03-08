@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo/widgets/task.dart';
+import 'package:todo/models/task.dart' as model;
+import 'package:todo/widgets/task.dart' as widget;
+import 'package:todo/services/task_service.dart';
 
 class TaskHomePage extends StatefulWidget {
   const TaskHomePage({super.key});
@@ -9,27 +11,26 @@ class TaskHomePage extends StatefulWidget {
 }
 
 class _TaskHomePageState extends State<TaskHomePage> {
-  final List<Map<String, dynamic>> tasksJson = [
-    {'title': 'Boodschappen doen', 'done': false},
-    {'title': 'Huiswerk maken', 'done': true},
-    {'title': 'Flutter oefenen', 'done': false},
-  ];
+  final taskService = TaskService();
 
   @override
   Widget build(BuildContext context) {
+    List<model.Task> tasks = taskService.getTasks();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo-app'),
       ),
       body: ListView.builder(
-        itemCount: tasksJson.length,
+        itemCount: tasks.length,
         itemBuilder: (context, index) {
-          final taskMap = tasksJson[index];
+          final task = tasks[index];
+
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Task(
-              title: taskMap['title'] as String,
-              initialDone: taskMap['done'] as bool,
+            child: widget.Task(
+              title: task.title,
+              initialDone: task.done,
             ),
           );
         },
