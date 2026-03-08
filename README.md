@@ -6,4 +6,9 @@ Dit is een voorbeeld project van een simpele Todo App. Je oefent met:
 - het genereren van een lijst met items
 
 ## Aan de slag
+### Les 1: 
+Oefen met state door een StatefullWidget te maken. 
 Open de [README (PDF)](README.pdf) en volg de stappen 1 voor 1
+
+### Les 2: 
+Volg de stappen per file in de map: [`tutorials`](/tutorial/)
