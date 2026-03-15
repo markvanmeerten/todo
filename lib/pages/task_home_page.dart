@@ -16,28 +16,44 @@ class _TaskHomePageState extends State<TaskHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<model.Task> tasks = taskService.getTasks();
-
     return Scaffold(
       appBar: AppBar(title: const Text('Todo-app')),
-      body: ListView.builder(
-        itemCount: tasks.length,
-        itemBuilder: (context, index) {
-          final task = tasks[index];
+      body: StreamBuilder<List<model.Task>>(
+        stream: taskService.getTasks(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: widget.Task(
-              task: task,
-              onChanged: () {
-                setState(() {
-                  taskService.toggleTask(task);
-                });
-              },
-            ),
+          if (snapshot.hasError) {
+            return Center(child: Text('Er ging iets mis: ${snapshot.error}'));
+          }
+
+          final tasks = snapshot.data ?? [];
+
+          if (tasks.isEmpty) {
+            return const Center(child: Text('Nog geen taken'));
+          }
+
+          return ListView.builder(
+            itemCount: tasks.length,
+            itemBuilder: (context, index) {
+              final task = tasks[index];
+
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: widget.Task(
+                  task: task,
+                  onChanged: () async {
+                    await taskService.toggleTask(task);
+                  },
+                ),
+              );
+            },
           );
         },
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
@@ -59,17 +75,15 @@ class _TaskHomePageState extends State<TaskHomePage> {
                     child: Text("Annuleren"),
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       final text = controller.text.trim();
 
                       if (text.isEmpty) {
                         return;
                       }
 
-                      setState(() {
-                        taskService.addTask(text);
-                      });
-
+                      await taskService.addTask(controller.text);
+                      
                       controller.clear();
                       Navigator.pop(context);
                     },
