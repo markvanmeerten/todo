@@ -68,7 +68,7 @@ class Task {
 - We voegen properties toe die niet gewijzigd mogen worden: `final Type varnaam`
 - We voegen een constructor toe die nieuwe objecten verplicht (`required`) waardes toekent
 
-> Als we `title` of `done` willen wijzigen maken we een heel nieuw object met de nieuwe waardes. Hierover meer in [[Stap 3 - Maak je TaskService (get)]]
+> Als we `title` of `done` willen wijzigen maken we een heel nieuw object met de nieuwe waardes. Hierover meer in [[Stap 3 - Haal Tasks op m.b.v. een Service]]
 
 ---
 ### 2.3 Maak een Task object
@@ -164,6 +164,6 @@ Als je vastloopt kun je hier je [code vergelijken](https://github.com/markvanmee
 In de vorige tutorial gebruikten we een `Map` om taken op te slaan.
 In deze stap hebben we een `Task` klasse gemaakt.
 
-Waarom kan een modelklasse zoals `Task` handiger zijn dan een `Map` wanneer een app groter wordt?
+>**Reflectievraag:** Waarom kan een modelklasse zoals `Task` handiger zijn dan een `Map` wanneer een app groter wordt?
 
-Bekijk hier [[Stap 3 - Maak je TaskService (get)]]
+Bekijk hier [[Stap 3 - Haal Tasks op m.b.v. een Service]]

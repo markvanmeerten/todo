@@ -115,6 +115,6 @@ Als je vastloopt kun je hier je [code vergelijken](https://github.com/markvanmee
 
 ---
 ### 1.6 Reflectie
-**Reflectievraag:** Waarom is het handig om code te verdelen over meerdere bestanden? Noem minstens twee voordelen.
+>**Reflectievraag:** Waarom is het handig om code te verdelen over meerdere bestanden? Noem minstens twee voordelen.
 
 Bekijk hier [[Stap 2 – Van Map naar een Task model]]

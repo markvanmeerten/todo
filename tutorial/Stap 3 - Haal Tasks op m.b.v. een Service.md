@@ -3,14 +3,13 @@ In de eerste tutorial stond alles in één bestand:
 - UI
 - data
 - logica
-In grotere apps wordt dat gescheiden.
 
-Daarom maken we een service, deze:
+In grotere apps wordt dat gescheiden. Daarom maken we een service, deze:
 - beheert data
 - bevat logica
 - wordt gebruikt door de UI
-- Later zal deze service met Firebase praten.
-- Maar in deze stap gebruiken we nog lokale data.
+
+⚠️ Later zal deze service met Firebase praten, maar nu nog niet.
 
 ---
 ### 3.1 Open het service-bestand
@@ -143,7 +142,7 @@ class _TaskHomePageState extends State<TaskHomePage> {
 > Als je goed kijkt hebben we de naam van de variabele `tasksJson` verandert naar `tasks`. Fix de errors die daardoor worden veroorzaakt!
 
 ---
-## ## 3.8 Controlepunt
+### 3.8 Controlepunt
 Controleer of:
 - Taken nog steeds worden weergegeven
 - Taken kunnen worden afgevinkt
@@ -153,16 +152,12 @@ Als je vastloopt kun je hier je [code vergelijken]([https://github.com/markvanme
 > De status van de taak verandert nog wel via de `widget` zelf. Die functie gaan we verplaatsen in de volgende stap!
 
 ---
-### 3.8 Reflectie
+### 3.9 Reflectie
 Je bestand `task_service.dart` bevat nu:
 - een class `TaskService`
 - een lijst `_tasks`
 - een functie `getTasks`
 
-Waarom kan het handig zijn dat `TaskPage` niet direct met de data werkt, maar via `TaskService`?
-- De code wordt overzichtelijker
-- Logica staat op één plek
-- De UI hoort niet te weten waar de data vandaan komt
-- Het is makkelijker om later Firebase toe te voegen of een geheel andere database
+>**Reflectievraag:** Waarom kan het handig zijn dat `TaskPage` niet direct met de data werkt, maar via `TaskService`?
 
-Bekijk hier [[Stap 4 - Breid je TaskService uit (toggle)]]
+Bekijk hier [[Stap 4 - Toggle de Task state]]
