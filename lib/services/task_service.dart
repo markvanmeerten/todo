@@ -13,11 +13,21 @@ class TaskService {
 
   void toggleTask(Task task) {
     final index = _tasks.indexOf(task);
-    
+
     _tasks[index] = Task(
       id: task.id,
       title: task.title,
       done: !task.done,
+    );
+  }
+
+  void addTask(String title) {
+    _tasks.add(
+      Task(
+        id: DateTime.now().toString(), 
+        title: title, 
+        done: false
+      )
     );
   }
 }
