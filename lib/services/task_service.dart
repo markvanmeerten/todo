@@ -1,33 +1,34 @@
 import 'package:todo/models/task.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../models/task.dart';
 
 class TaskService {
-  final List<Task> _tasks = [
-    Task(id: "1", title: "Boodschappen doen", done: false),
-    Task(id: "2", title: "Huiswerk maken", done: true),
-    Task(id: "3", title: "Flutter oefenen", done: false),
-  ];
+  final CollectionReference<Map<String, dynamic>> _tasksCollection =
+      FirebaseFirestore.instance.collection('tasks');
 
-  List<Task> getTasks() {
-    return _tasks;
+  Stream<List<Task>> getTasks() {
+    return _tasksCollection.orderBy('createdAt').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        final data = doc.data();
+
+        return Task(
+          id: doc.id,
+          title: data['title'] ?? '',
+          done: data['done'] ?? false,
+        );
+      }).toList();
+    });
   }
 
-  void toggleTask(Task task) {
-    final index = _tasks.indexOf(task);
-
-    _tasks[index] = Task(
-      id: task.id,
-      title: task.title,
-      done: !task.done,
-    );
+  Future<void> toggleTask(Task task) async {
+    await _tasksCollection.doc(task.id).update({'done': !task.done});
   }
 
-  void addTask(String title) {
-    _tasks.add(
-      Task(
-        id: DateTime.now().toString(), 
-        title: title, 
-        done: false
-      )
-    );
+  Future<void> addTask(String title) async {
+    await _tasksCollection.add({
+      'title': title,
+      'done': false,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "910837320577",
+    "project_id": "flutter-todo-tut-app",
+    "storage_bucket": "flutter-todo-tut-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910837320577:android:ca9325042f0ac424a53680",
+        "android_client_info": {
+          "package_name": "com.example.todo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCb0fuYkKTk5nxPwZ-V6zAvVy8Yg_-jBWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
