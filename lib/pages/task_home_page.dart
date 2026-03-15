@@ -47,25 +47,30 @@ class _TaskHomePageState extends State<TaskHomePage> {
                 title: Text("Nieuwe taak"),
                 content: TextField(
                   controller: controller,
+                  autofocus: true,
                   decoration: InputDecoration(hintText: "Typ een nieuwe taak"),
                 ),
                 actions: [
                   TextButton(
                     onPressed: () {
                       controller.clear();
-
                       Navigator.pop(context);
                     },
                     child: Text("Annuleren"),
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      final text = controller.text.trim();
+
+                      if (text.isEmpty) {
+                        return;
+                      }
+
                       setState(() {
-                        taskService.addTask(controller.text);
+                        taskService.addTask(text);
                       });
 
                       controller.clear();
-                      
                       Navigator.pop(context);
                     },
                     child: Text("Toevoegen"),
