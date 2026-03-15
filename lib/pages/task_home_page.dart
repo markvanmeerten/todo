@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo/models/task.dart' as model;
-import 'package:todo/widgets/task.dart' as widget;
+import 'package:todo/widgets/task.dart' as task_widget;
 import 'package:todo/services/task_service.dart';
+import 'package:todo/widgets/add_task_dialog.dart';
 
 class TaskHomePage extends StatefulWidget {
   const TaskHomePage({super.key});
@@ -12,11 +13,25 @@ class TaskHomePage extends StatefulWidget {
 
 class _TaskHomePageState extends State<TaskHomePage> {
   final taskService = TaskService();
-  final controller = TextEditingController();
+
+  Future<void> openAddTaskDialog() async {
+    final newTaskTitle = await showDialog<String>(
+      context: context,
+      builder: (context) {
+        return const AddTaskDialog();
+      },
+    );
+
+    if (newTaskTitle == null || newTaskTitle.isEmpty) return;
+
+    setState(() {
+      taskService.addTask(newTaskTitle);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<model.Task> tasks = taskService.getTasks();
+    final List<model.Task> tasks = taskService.getTasks();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Todo-app')),
@@ -27,7 +42,7 @@ class _TaskHomePageState extends State<TaskHomePage> {
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: widget.Task(
+            child: task_widget.Task(
               task: task,
               onChanged: () {
                 setState(() {
@@ -39,42 +54,7 @@ class _TaskHomePageState extends State<TaskHomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text("Nieuwe taak"),
-                content: TextField(
-                  controller: controller,
-                  decoration: InputDecoration(hintText: "Typ een nieuwe taak"),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      controller.clear();
-
-                      Navigator.pop(context);
-                    },
-                    child: Text("Annuleren"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        taskService.addTask(controller.text);
-                      });
-
-                      controller.clear();
-                      
-                      Navigator.pop(context);
-                    },
-                    child: Text("Toevoegen"),
-                  ),
-                ],
-              );
-            },
-          );
-        },
+        onPressed: openAddTaskDialog,
         child: const Icon(Icons.add),
       ),
     );
